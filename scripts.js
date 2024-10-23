@@ -1,53 +1,55 @@
-const iframeUrlInput = document.getElementById("iframeUrl");
-const loadIframeButton = document.getElementById("loadIframe");
-const testIframe = document.getElementById("testIframe");
-const eventLog = document.getElementById("eventLog");
+document.getElementById("loadEvent").addEventListener("click", function () {
+  // Clear any existing event container and logs
+  document.querySelector(".events-container").innerHTML = "";
+  document.getElementById("eventLog").textContent = "";
 
-// Function to log events in the textarea
-function logEvent(message) {
-  eventLog.value += `${message}\n`;
-}
+  const orgId = document.getElementById("orgId").value.trim();
+  const path = document.getElementById("path").value.trim();
 
-// Define the EventsApp and set up the event listeners
-function initializeEventsApp() {
-  const app = new EventsApp({
-    orgId: "3itLbC6",
-    path: "/g/ZZ8AC6qtdC?search=&sortBy=date&category=&date=TODAY&keywords=",
+  if (!orgId || !path) {
+    alert("Please provide both Organization ID and Path.");
+    return;
+  }
+
+  // Initialize the Blackthorn EventsApp with dynamic orgId and path
+  initializeEventsApp(orgId, path);
+});
+
+function initializeEventsApp(orgId, path) {
+  const eventLog = document.getElementById("eventLog");
+
+  var app = new EventsApp({
+    orgId: orgId,
+    path: path,
     listeners: [
       {
         event: "APP_READY",
         handler: function () {
-          logEvent("APP READY");
+          logEvent("APP_READY");
         },
       },
       {
         event: "ROUTE_CHANGED",
         handler: function (params) {
-          logEvent(`ROUTE_CHANGED: ${JSON.stringify(params)}`);
+          logEvent("ROUTE_CHANGED: " + JSON.stringify(params));
         },
       },
       {
         event: "CONTENT_SIZE_CHANGED",
         handler: function (params) {
-          logEvent(`CONTENT_SIZE_CHANGED: ${JSON.stringify(params)}`);
-          // Optionally resize the iframe
-          testIframe.style.height = `${params.height}px`;
+          logEvent("CONTENT_SIZE_CHANGED: " + JSON.stringify(params));
+          // Dynamically adjust iframe size based on content
+          document.querySelector(".events-container").style.height =
+            params.height + "px";
         },
       },
     ],
   });
 
-  // Mount the app into the events container
   app.mount(".events-container");
+
+  function logEvent(message) {
+    eventLog.textContent += message + "\n";
+    eventLog.scrollTop = eventLog.scrollHeight; // Auto-scroll to the bottom
+  }
 }
-
-// Load iframe content and initialize the EventsApp when the button is clicked
-loadIframeButton.addEventListener("click", () => {
-  const iframeUrl = iframeUrlInput.value;
-  testIframe.src = iframeUrl;
-
-  // Wait for the iframe to load
-  testIframe.onload = () => {
-    initializeEventsApp();
-  };
-});

@@ -1,23 +1,46 @@
 body {
   font-family: Arial, sans-serif;
+  margin: 20px;
 }
 
-.container {
-  width: 90%;
-  margin: 20px auto;
+h1 {
+  text-align: center;
 }
 
-label, input, button, iframe, textarea {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
+.input-container {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-iframe {
-  height: 400px;
+input {
+  margin: 10px;
+  padding: 10px;
+  font-size: 1rem;
+  width: 300px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.events-container {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  min-height: 400px;
+}
+
+.log-output {
+  margin-top: 20px;
+  padding: 10px;
   border: 1px solid #ccc;
 }
 
-textarea {
-  height: 150px;
+pre {
+  background-color: #f4f4f4;
+  padding: 10px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-size: 0.9rem;
 }
