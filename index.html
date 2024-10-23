@@ -3,23 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blackthorn Events Embed</title>
     <link rel="stylesheet" href="styles.css" />
-    <title>Event Listener Tester</title>
   </head>
   <body>
-    <div class="container">
-      <h1>Event Listener Tester</h1>
+    <h1>Blackthorn Events Embed Tester</h1>
+    <div class="input-container">
+      <label for="orgId">Organization ID:</label>
       <input
         type="text"
-        id="domainInput"
-        placeholder="Enter Domain (e.g., events.blackthorn.io)"
+        id="orgId"
+        placeholder="Enter Organization ID (e.g., 3itLbC6)"
       />
-      <input type="text" id="orgIdInput" placeholder="Enter Organization ID" />
-      <input type="text" id="pathInput" placeholder="Enter Path" />
-      <button id="loadIframe">Load iFrame</button>
-      <iframe id="testIframe" src="" frameborder="0"></iframe>
-      <div id="eventLog"></div>
+      <label for="path">Path:</label>
+      <input
+        type="text"
+        id="path"
+        placeholder="Enter Path (e.g., /g/ZZ8AC6qtdC)"
+      />
+      <button id="loadEvent">Load Event</button>
+    </div>
+    <div class="events-container"></div>
+    <div class="log-output">
+      <h2>Event Log</h2>
+      <pre id="eventLog"></pre>
     </div>
     <script src="scripts.js"></script>
+    <!-- Load your custom script last -->
   </body>
 </html>

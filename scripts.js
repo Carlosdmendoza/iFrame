@@ -1,29 +1,33 @@
-// Initialize event listener for the button
-document.getElementById("loadIframe").addEventListener("click", function () {
-  const domain = document.getElementById("domainInput").value.trim();
-  const orgId = document.getElementById("orgIdInput").value.trim();
-  const path = document.getElementById("pathInput").value.trim();
+document.getElementById("loadEvent").addEventListener("click", function () {
+  const orgId = document.getElementById("orgId").value.trim();
+  const path = document.getElementById("path").value.trim();
 
-  // Construct the full URL
-  const iframeSrc = `https://${domain}/embed.js`;
-  const appSrc = `https://${domain}${path}`;
+  // Construct the dynamic script source
+  const domain = "events.blackthorn.io"; // Change as needed
+  const scriptSrc = `https://${domain}/embed.js`;
+  const appSrc = `https://${domain}${path.startsWith("/") ? path : "/" + path}`; // Ensure the path starts with '/'
 
-  // Load the iframe with the constructed src
-  const testIframe = document.getElementById("testIframe");
-  testIframe.src = appSrc;
+  // Log the constructed URLs for debugging
+  console.log("iFrame Source:", appSrc);
+  console.log("Script Source:", scriptSrc);
 
-  // Create a script element to load the EventsApp
+  // Load the script dynamically
   const script = document.createElement("script");
-  script.src = iframeSrc;
+  script.src = scriptSrc;
   script.onload = function () {
-    initializeEventsApp(orgId, path); // Initialize the app once the script is loaded
+    // Initialize the Events App
+    if (typeof initializeEventsApp === "function") {
+      initializeEventsApp(orgId, path);
+    } else {
+      console.error("initializeEventsApp is not defined.");
+    }
   };
   document.body.appendChild(script);
 });
 
 // Function to initialize the EventsApp
 function initializeEventsApp(orgId, path) {
-  var app = new EventsApp({
+  const app = new EventsApp({
     orgId: orgId,
     path: path,
     listeners: [
