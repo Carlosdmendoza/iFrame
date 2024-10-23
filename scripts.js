@@ -1,23 +1,28 @@
-document.getElementById("loadEvent").addEventListener("click", function () {
-  // Clear any existing event container and logs
-  document.querySelector(".events-container").innerHTML = "";
-  document.getElementById("eventLog").textContent = "";
+// Initialize event listener for the button
+document.getElementById("loadIframe").addEventListener("click", function () {
+  const domain = document.getElementById("domainInput").value.trim();
+  const orgId = document.getElementById("orgIdInput").value.trim();
+  const path = document.getElementById("pathInput").value.trim();
 
-  const orgId = document.getElementById("orgId").value.trim();
-  const path = document.getElementById("path").value.trim();
+  // Construct the full URL
+  const iframeSrc = `https://${domain}/embed.js`;
+  const appSrc = `https://${domain}${path}`;
 
-  if (!orgId || !path) {
-    alert("Please provide both Organization ID and Path.");
-    return;
-  }
+  // Load the iframe with the constructed src
+  const testIframe = document.getElementById("testIframe");
+  testIframe.src = appSrc;
 
-  // Initialize the Blackthorn EventsApp with dynamic orgId and path
-  initializeEventsApp(orgId, path);
+  // Create a script element to load the EventsApp
+  const script = document.createElement("script");
+  script.src = iframeSrc;
+  script.onload = function () {
+    initializeEventsApp(orgId, path); // Initialize the app once the script is loaded
+  };
+  document.body.appendChild(script);
 });
 
+// Function to initialize the EventsApp
 function initializeEventsApp(orgId, path) {
-  const eventLog = document.getElementById("eventLog");
-
   var app = new EventsApp({
     orgId: orgId,
     path: path,
@@ -25,7 +30,7 @@ function initializeEventsApp(orgId, path) {
       {
         event: "APP_READY",
         handler: function () {
-          logEvent("APP_READY");
+          logEvent("APP READY");
         },
       },
       {
@@ -38,18 +43,21 @@ function initializeEventsApp(orgId, path) {
         event: "CONTENT_SIZE_CHANGED",
         handler: function (params) {
           logEvent("CONTENT_SIZE_CHANGED: " + JSON.stringify(params));
-          // Dynamically adjust iframe size based on content
-          document.querySelector(".events-container").style.height =
-            params.height + "px";
+        },
+      },
+      {
+        event: "FORM_SUBMITTED",
+        handler: function (params) {
+          logEvent("FORM_SUBMITTED: " + JSON.stringify(params));
         },
       },
     ],
   });
-
   app.mount(".events-container");
+}
 
-  function logEvent(message) {
-    eventLog.textContent += message + "\n";
-    eventLog.scrollTop = eventLog.scrollHeight; // Auto-scroll to the bottom
-  }
+// Function to log events to the event log
+function logEvent(message) {
+  const eventLog = document.getElementById("eventLog");
+  eventLog.innerText += message + "\n";
 }
