@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iframe Event Listener Tester</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Iframe Event Listener Tester</h1>
+
+      <!-- Input to specify the iframe URL -->
+      <label for="iframeUrl">Enter the iframe URL:</label>
+      <input type="text" id="iframeUrl" placeholder="Enter URL of the iframe" />
+
+      <!-- Button to load the iframe -->
+      <button id="loadIframe">Load Iframe</button>
+
+      <!-- Iframe to display the content -->
+      <iframe id="testIframe" src="" title="Iframe Content"></iframe>
+
+      <!-- Textarea to display event listener output -->
+      <label for="eventLog">Event Listener Output:</label>
+      <textarea id="eventLog" readonly></textarea>
+    </div>
+
+    <!-- Add a placeholder where the EventsApp will mount -->
+    <div class="events-container"></div>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>
