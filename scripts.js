@@ -3,7 +3,7 @@ document.getElementById("loadEvent").addEventListener("click", function () {
   const path = document.getElementById("path").value.trim();
 
   // Construct the dynamic script source
-  const domain = "events.blackthorn.io"; // Change as needed
+  const domain = "dev-ew-ev-6229.blackthorncloud.com"; // Change as needed
   const scriptSrc = `https://${domain}/embed.js`;
   const appSrc = `https://${domain}${path.startsWith("/") ? path : "/" + path}`; // Ensure the path starts with '/'
 
