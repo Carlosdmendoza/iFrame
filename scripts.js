@@ -1,9 +1,11 @@
+const { log } = require("console");
+
 document.getElementById("loadEvent").addEventListener("click", function () {
   const orgId = document.getElementById("orgId").value.trim();
   const path = document.getElementById("path").value.trim();
 
   // Construct the dynamic script source
-  const domain = "dev-ew-ev-6229.blackthorncloud.com"; // Change as needed
+  const domain = "dev-ew-ev-6229.blackthorncloud.com";
   const scriptSrc = `https://${domain}/embed.js`;
   const appSrc = `https://${domain}${path.startsWith("/") ? path : "/" + path}`; // Ensure the path starts with '/'
 
@@ -30,6 +32,7 @@ function initializeEventsApp(orgId, path) {
   const app = new EventsApp({
     orgId: orgId,
     path: path,
+    instanceUrl: "https://dev-ew-ev-6229.blackthorncloud.com",
     listeners: [
       {
         event: "APP_READY",
@@ -52,6 +55,9 @@ function initializeEventsApp(orgId, path) {
       {
         event: "FORM_SUBMITTED",
         handler: function (params) {
+          logEvent(
+            "FORM_SUBMITTED: " + JSON.stringify(app.getFormData(params))
+          );
           logEvent("FORM_SUBMITTED: " + JSON.stringify(params));
         },
       },
