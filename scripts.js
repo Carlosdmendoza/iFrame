@@ -1,8 +1,7 @@
-const { log } = require("console");
-
 document.getElementById("loadEvent").addEventListener("click", function () {
   const orgId = document.getElementById("orgId").value.trim();
   const path = document.getElementById("path").value.trim();
+  const instanceUrl = "https://dev-ew-ev-6229.blackthorncloud.com/";
 
   // Construct the dynamic script source
   const domain = "dev-ew-ev-6229.blackthorncloud.com";
@@ -19,7 +18,7 @@ document.getElementById("loadEvent").addEventListener("click", function () {
   script.onload = function () {
     // Initialize the Events App
     if (typeof initializeEventsApp === "function") {
-      initializeEventsApp(orgId, path);
+      initializeEventsApp(orgId, path, instanceUrl);
     } else {
       console.error("initializeEventsApp is not defined.");
     }
@@ -28,11 +27,11 @@ document.getElementById("loadEvent").addEventListener("click", function () {
 });
 
 // Function to initialize the EventsApp
-function initializeEventsApp(orgId, path) {
+function initializeEventsApp(orgId, path, instanceUrl) {
   const app = new EventsApp({
     orgId: orgId,
     path: path,
-    instanceUrl: "https://dev-ew-ev-6229.blackthorncloud.com",
+    instanceUrl: instanceUrl,
     listeners: [
       {
         event: "APP_READY",
