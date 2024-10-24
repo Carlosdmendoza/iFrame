@@ -1,7 +1,7 @@
 document.getElementById("loadEvent").addEventListener("click", function () {
   const orgId = document.getElementById("orgId").value.trim();
   const path = document.getElementById("path").value.trim();
-  const instanceUrl = "https://dev-ew-ev-6229.blackthorncloud.com/";
+  const instanceUrl = "https://dev-ew-ev-6229.blackthorncloud.com";
 
   // Construct the dynamic script source
   const domain = "dev-ew-ev-6229.blackthorncloud.com";
@@ -54,9 +54,6 @@ function initializeEventsApp(orgId, path, instanceUrl) {
       {
         event: "FORM_SUBMITTED",
         handler: function (params) {
-          logEvent(
-            "FORM_SUBMITTED: " + JSON.stringify(app.getFormData(params))
-          );
           logEvent("FORM_SUBMITTED: " + JSON.stringify(params));
         },
       },
